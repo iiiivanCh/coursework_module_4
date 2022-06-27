@@ -49,7 +49,6 @@
           } else {
             alert(langRu.userRSPGoodbye);
             mark = 555;
-            console.log(mark);
             return mark;
           }
         }
@@ -65,8 +64,6 @@
           return doRSP();
         }
         const machine = Math.floor(Math.random() * 3);
-        console.log(user);
-        console.log(machine);
         if (user === machine) {
           alert(langRu.userRSPDraw);
           return doRSP();
@@ -78,7 +75,6 @@
           mark = 0;
           alert(langRu.userRSP02);
         }
-        console.log(mark);
         return mark;
       };
 
@@ -91,7 +87,6 @@
           return 555;
         }
         if (Number.isInteger(step) && step > 0 && step <= balloons.player) {
-          console.log("userStep", step)
           return step;
         } else {
           const words = `${langRu.userError} ${balloons.player}`;
@@ -104,16 +99,13 @@
         let evenOdd;
         const x = confirm(langRu.userEvenOdd);
         x ? (evenOdd = 2) : (evenOdd = 1);
-        console.log("userEvenOdd", evenOdd);
         return evenOdd;
       }
 
       function doMachineStep(min = 1, max = balloons.computer) {
-        console.log("maxComputer", balloons.computer);
         min = Math.ceil(min);
         max = Math.floor(max);
         const step = Math.floor(Math.random() * (max - min + 1) + min);
-        console.log("stepComputer", step);
         return step;
       }
 
@@ -122,13 +114,11 @@
         min = Math.ceil(min);
         max = Math.floor(max);
         const machine = Math.floor(Math.random() * (max - min + 1) + min);
-        console.log("computerEvenOdd", machine)
         return machine === 1 ? (evenOdd = 1) : (evenOdd = 2);
       }
 
       function doRequest(message) {
         if (message) {
-          console.log(message);
           return start();
         } else {
           const words = `${langRu.userGoodbye01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer}`;
@@ -139,7 +129,6 @@
 
       function doUserAnalysis(ball, evenOdd) {
         let interim;
-        console.log(ball, evenOdd);
         evenOdd === 2 ? (interim = langRu.interimEven) : (interim = langRu.interimOdd);
         if ((ball % 2 === 0 && evenOdd === 2) || (ball % 2 !== 0 && evenOdd === 1)) {
           balloons.player += ball;
@@ -156,7 +145,6 @@
           result.computer += 1;
           const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          console.log(words);
           let end = doRequest(message);
           return end;
         }
@@ -164,7 +152,6 @@
           result.player += 1;
           const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          console.log(words);
           let end = doRequest(message);
           return end;
         }
@@ -172,7 +159,6 @@
 
       function doComputerAnalysis(ball, evenOdd) {
         let interim;
-        console.log(ball, evenOdd);
         evenOdd === 2 ? (interim = langRu.interimEven) : (interim = langRu.interimOdd);
         if ((ball % 2 === 0 && evenOdd === 2) || (ball % 2 !== 0 && evenOdd === 1)) {
           balloons.player -= ball;
@@ -189,7 +175,6 @@
           result.computer += 1;
           const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          console.log(words);
           let end = doRequest(message);
           return end;
         }
@@ -197,7 +182,6 @@
           result.player += 1;
           const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          console.log(words);
           let end = doRequest(message);
           return end;
         }
@@ -210,20 +194,17 @@
       if (mark === 1) {
         while (balloons.player >= 0 || balloons.computer >= 0) {
           let a = doUserStep();
-          console.log(a);
           if (a === 555) {
             break;
           }
           let b = doMachineEvenOdd();
           let exit = doComputerAnalysis(a, b);
-          console.log(exit);
           if (exit === 555) {
             break;
           }
           let c = doMachineStep();
           let d = doUserEvenOdd();
           exit = doUserAnalysis(c, d);
-          console.log(exit);
           if (exit === 555) {
             break;
           }
@@ -233,18 +214,15 @@
           let c = doMachineStep();
           let d = doUserEvenOdd();
           let exit = doUserAnalysis(c, d);
-          console.log(exit);
           if (exit === 555) {
             break;
           }
           let a = doUserStep();
-          console.log(a);
           if (a === 555) {
             break;
           }
           let b = doMachineEvenOdd();
           exit = doComputerAnalysis(a, b);
-          console.log(exit);
           if (exit === 555) {
             break;
           }
