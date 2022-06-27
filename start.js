@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (() => {
   const game = () => {
@@ -11,29 +11,28 @@
       userRSPExit: 'Желаете покинуть игру?',
       userRSPGoodbye: 'До новых встреч!',
       userRSPError: 'Необходимо набрать: или "камень", или "ножницы", или "бумага"',
-      userRSPDraw: "Пока ничья, надо еще сыграть",
-      userRSP01: "Вы начинаете",
-      userRSP02: "Начинает компьютер",
-      userQuestion: "Сколько шариков выбераете? Необходимо выбрать не более:",
-      userError: "Вы ввели неправильные данные, необходимо выбрать не более:",
-      userGoodbye01: "До следующих встреч!!!\nВы выиграли:",
-      userGoodbyeRout02: "\nКомпьютер выиграл:",
-      interimEven: "четное",
-      interimOdd: "нечетное",
-      interim: "Не угадал:",
-      interim00: "Угадал:",
-      interim01: "\nИтого шариков:\nУ компьютера:",
-      interim02: "\nУ Вас:",
-      userRout01: "Вы проиграли :(\nВы набрали:",
-      userRout03: "\nЖелаете продолжить игру?",
-      userVictory01: "Вы выиграли! :)\nВы набрали:",
+      userRSPDraw: 'Пока ничья, надо еще сыграть',
+      userRSP01: 'Вы начинаете',
+      userRSP02: 'Начинает компьютер',
+      userQuestion: 'Сколько шариков выбераете? Необходимо выбрать не более:',
+      userError: 'Вы ввели неправильные данные, необходимо выбрать не более:',
+      userGoodbye01: 'До следующих встреч!!!\nВы выиграли:',
+      userGoodbyeRout02: '\nКомпьютер выиграл:',
+      interimEven: 'четное',
+      interimOdd: 'нечетное',
+      interim: 'Не угадал:',
+      interim00: 'Угадал:',
+      interim01: '\nИтого шариков:\nУ компьютера:',
+      interim02: '\nУ Вас:',
+      userRout01: 'Вы проиграли :(\nВы набрали:',
+      userRout03: '\nЖелаете продолжить игру?',
+      userVictory01: 'Вы выиграли! :)\nВы набрали:',
       userEvenOdd: 'Компьютер отложил шарики.\nОтгадайте четное (нажмите кнопку "Да")\nили нечетное (нажмите кнопку "Нет")',
     };
     const value = ['камень', 'ножницы', 'бумага'];
     let mark;
 
     return function start() {
-
       const balloons = {
         player: 5,
         computer: 5,
@@ -58,7 +57,7 @@
         } else if (user[0] === value[1][0]) {
           user = 1;
         } else if (user[0] === value[2][0]) {
-          user = 2
+          user = 2;
         } else {
           alert(langRu.userRSPError);
           return doRSP();
@@ -76,11 +75,11 @@
           alert(langRu.userRSP02);
         }
         return mark;
-      };
+      }
 
       function doUserStep() {
         const words = `${langRu.userQuestion} ${balloons.player}`;
-        let step = +prompt(words);
+        const step = +prompt(words);
         if (step === 0 || step === null) {
           const words = `${langRu.userGoodbye01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer}`;
           alert(words);
@@ -145,14 +144,14 @@
           result.computer += 1;
           const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          let end = doRequest(message);
+          const end = doRequest(message);
           return end;
         }
         if (balloons.computer <= 0) {
           result.player += 1;
           const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          let end = doRequest(message);
+          const end = doRequest(message);
           return end;
         }
       }
@@ -175,14 +174,14 @@
           result.computer += 1;
           const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          let end = doRequest(message);
+          const end = doRequest(message);
           return end;
         }
         if (balloons.computer <= 0) {
           result.player += 1;
           const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
           const message = confirm(words);
-          let end = doRequest(message);
+          const end = doRequest(message);
           return end;
         }
       }
@@ -193,35 +192,35 @@
       }
       if (mark === 1) {
         while (balloons.player >= 0 || balloons.computer >= 0) {
-          let a = doUserStep();
+          const a = doUserStep();
           if (a === 555) {
             break;
           }
-          let b = doMachineEvenOdd();
+          const b = doMachineEvenOdd();
           let exit = doComputerAnalysis(a, b);
           if (exit === 555) {
             break;
           }
-          let c = doMachineStep();
-          let d = doUserEvenOdd();
+          const c = doMachineStep();
+          const d = doUserEvenOdd();
           exit = doUserAnalysis(c, d);
           if (exit === 555) {
             break;
           }
-        };
+        }
       } else {
         while (balloons.player >= 0 || balloons.computer >= 0) {
-          let c = doMachineStep();
-          let d = doUserEvenOdd();
+          const c = doMachineStep();
+          const d = doUserEvenOdd();
           let exit = doUserAnalysis(c, d);
           if (exit === 555) {
             break;
           }
-          let a = doUserStep();
+          const a = doUserStep();
           if (a === 555) {
             break;
           }
-          let b = doMachineEvenOdd();
+          const b = doMachineEvenOdd();
           exit = doComputerAnalysis(a, b);
           if (exit === 555) {
             break;
