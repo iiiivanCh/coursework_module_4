@@ -16,17 +16,17 @@
       userRSP02: 'Начинает компьютер',
       userQuestion: 'Сколько шариков выбераете? Необходимо выбрать не более:',
       userError: 'Вы ввели неправильные данные, необходимо выбрать не более:',
-      userGoodbye01: 'До следующих встреч!!!\nВы выиграли:',
-      userGoodbyeRout02: '\nКомпьютер выиграл:',
+      userGoodbye01: 'До следующих встреч!!!\nВсего Вы выиграли:',
+      userGoodbyeRout02: '\nВсего компьютер выиграл:',
       interimEven: 'четное',
       interimOdd: 'нечетное',
       interim: 'Не угадал:',
       interim00: 'Угадал:',
       interim01: '\nИтого шариков:\nУ компьютера:',
       interim02: '\nУ Вас:',
-      userRout01: 'Вы проиграли :(\nВы набрали:',
+      userRout01: 'Вы проиграли :(\nВсего Вы выиграли:',
       userRout03: '\nЖелаете продолжить игру?',
-      userVictory01: 'Вы выиграли! :)\nВы набрали:',
+      userVictory01: 'Вы выиграли! :)\nВсего Вы выиграли:',
       userEvenOdd: 'Компьютер отложил шарики.\nОтгадайте четное (нажмите кнопку "Да")\nили нечетное (нажмите кнопку "Нет")',
     };
     const value = ['камень', 'ножницы', 'бумага'];
@@ -116,16 +116,6 @@
         return machine === 1 ? (evenOdd = 1) : (evenOdd = 2);
       }
 
-      function doRequest(message) {
-        if (message) {
-          return start();
-        } else {
-          const words = `${langRu.userGoodbye01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer}`;
-          alert(words);
-          return 555;
-        }
-      }
-
       function doUserAnalysis(ball, evenOdd) {
         let interim;
         evenOdd === 2 ? (interim = langRu.interimEven) : (interim = langRu.interimOdd);
@@ -142,16 +132,12 @@
         }
         if (balloons.player <= 0) {
           result.computer += 1;
-          const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
-          const message = confirm(words);
-          const end = doRequest(message);
+          let end = 555;
           return end;
         }
         if (balloons.computer <= 0) {
           result.player += 1;
-          const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
-          const message = confirm(words);
-          const end = doRequest(message);
+          let end = 555;
           return end;
         }
       }
@@ -172,61 +158,77 @@
         }
         if (balloons.player <= 0) {
           result.computer += 1;
-          const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
-          const message = confirm(words);
-          const end = doRequest(message);
+          let end = 555;
           return end;
         }
         if (balloons.computer <= 0) {
           result.player += 1;
-          const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
-          const message = confirm(words);
-          const end = doRequest(message);
+          let end = 555;
           return end;
         }
+      }
+
+      function doRequest() {
+        let message
+        if (balloons.computer <= 0) {
+          const words = `${langRu.userVictory01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
+          message = confirm(words);
+        }
+        if (balloons.player <= 0) {
+          const words = `${langRu.userRout01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer} ${langRu.userRout03}`;
+          message = confirm(words);
+        }
+        if (message) {
+          return start();
+        }
+        // } else {
+        //   const words = `${langRu.userGoodbye01} ${result.player} ${langRu.userGoodbyeRout02} ${result.computer}`;
+        //   alert(words);
+        // }
       }
 
       mark = doRSP();
       if (mark === 555) {
         return;
-      }
+      };
       if (mark === 1) {
         while (balloons.player >= 0 || balloons.computer >= 0) {
-          const a = doUserStep();
-          if (a === 555) {
+          const userStep = doUserStep();
+          if (userStep === 555) {
             break;
           }
-          const b = doMachineEvenOdd();
-          let exit = doComputerAnalysis(a, b);
+          const machineEvenOdd = doMachineEvenOdd();
+          let exit = doComputerAnalysis(userStep, machineEvenOdd);
           if (exit === 555) {
             break;
           }
-          const c = doMachineStep();
-          const d = doUserEvenOdd();
-          exit = doUserAnalysis(c, d);
+          const machineStep = doMachineStep();
+          const userEvenOdd = doUserEvenOdd();
+          exit = doUserAnalysis(machineStep, userEvenOdd);
           if (exit === 555) {
             break;
           }
         }
       } else {
         while (balloons.player >= 0 || balloons.computer >= 0) {
-          const c = doMachineStep();
-          const d = doUserEvenOdd();
-          let exit = doUserAnalysis(c, d);
+          const machineStep = doMachineStep();
+          const userEvenOdd = doUserEvenOdd();
+          let exit = doUserAnalysis(machineStep, userEvenOdd);
           if (exit === 555) {
             break;
           }
-          const a = doUserStep();
-          if (a === 555) {
+          const userStep = doUserStep();
+          if (userStep === 555) {
             break;
           }
-          const b = doMachineEvenOdd();
-          exit = doComputerAnalysis(a, b);
+          const machineEvenOdd = doMachineEvenOdd();
+          exit = doComputerAnalysis(userStep, machineEvenOdd);
           if (exit === 555) {
             break;
           }
         }
-      }
+      };
+      doRequest();
     };
   };
 
